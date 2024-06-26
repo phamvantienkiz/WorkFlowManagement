@@ -4,7 +4,9 @@ import com.example.WorkFlowManagement.dto.request.UserCreationRequest;
 import com.example.WorkFlowManagement.dto.request.UserUpdateRequest;
 import com.example.WorkFlowManagement.entity.User;
 import com.example.WorkFlowManagement.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +18,7 @@ public class UserAPI {
     private UserService userService;
 
     @PostMapping("/create-users")
-    User createUser(@RequestBody UserCreationRequest request){
+    User createUser(@RequestBody @Valid UserCreationRequest request){
         return userService.createRequest(request);
     }
 
