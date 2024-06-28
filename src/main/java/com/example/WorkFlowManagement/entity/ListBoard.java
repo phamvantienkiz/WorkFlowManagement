@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @RequiredArgsConstructor
@@ -17,9 +18,12 @@ public class ListBoard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @OneToMany
-    @JoinColumn(name = "board_id")
-    private Board board;
+    private List<Board> Boards;
 
     private String title;
 

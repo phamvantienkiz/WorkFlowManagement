@@ -3,8 +3,12 @@ package com.example.WorkFlowManagement.service;
 import com.example.WorkFlowManagement.dto.request.UserCreationRequest;
 import com.example.WorkFlowManagement.dto.request.UserUpdateRequest;
 import com.example.WorkFlowManagement.entity.User;
+import com.example.WorkFlowManagement.exception.AppException;
+import com.example.WorkFlowManagement.exception.ErrorCode;
 import com.example.WorkFlowManagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +22,7 @@ public class UserService {
         User user = new User();
 
         if(userRepository.existsByUsername(request.getUsername())){
-            throw new RuntimeException("User existed");
+            throw new AppException(ErrorCode.USER_EXISTED);
         }
 
         user.setUsername(request.getUsername());
@@ -26,6 +30,9 @@ public class UserService {
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setDob(request.getDob());
+
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(5);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         return userRepository.save(user);
     }
