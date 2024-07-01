@@ -27,10 +27,6 @@ public class Board {
     @JoinColumn(name = "listBoard_id")
     private ListBoard listBoard;
 
-//    @OneToMany
-//    @JoinColumn(name = "card_id")
-//    private Card card;
-
     private Date createAt;
     private Date updateAt;
 }

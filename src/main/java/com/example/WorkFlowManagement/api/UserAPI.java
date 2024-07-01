@@ -7,12 +7,15 @@ import com.example.WorkFlowManagement.dto.response.UserResponse;
 import com.example.WorkFlowManagement.entity.User;
 import com.example.WorkFlowManagement.service.UserService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController()
 @RequestMapping("/identity")
 public class UserAPI {
@@ -29,8 +32,15 @@ public class UserAPI {
     }
 
     @GetMapping("/get-users")
-    List<User> getUsers(){
-        return userService.getUsers();
+    ApiResponse<List<User>> getUsers(){
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        log.info("Username: {}", authentication.getName());
+        authentication.getAuthorities().forEach(grantedAuthority -> log.info(grantedAuthority.getAuthority()));
+
+        return ApiResponse.<List<User>>builder()
+                .result(userService.getUsers())
+                .build();
     }
 
     @GetMapping("/get-user/{userId}")

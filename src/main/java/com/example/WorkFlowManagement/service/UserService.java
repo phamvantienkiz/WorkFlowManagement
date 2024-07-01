@@ -3,20 +3,29 @@ package com.example.WorkFlowManagement.service;
 import com.example.WorkFlowManagement.dto.request.UserCreationRequest;
 import com.example.WorkFlowManagement.dto.request.UserUpdateRequest;
 import com.example.WorkFlowManagement.entity.User;
+import com.example.WorkFlowManagement.enums.Role;
 import com.example.WorkFlowManagement.exception.AppException;
 import com.example.WorkFlowManagement.exception.ErrorCode;
 import com.example.WorkFlowManagement.repository.UserRepository;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public class UserService {
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
+    PasswordEncoder passwordEncoder;
 
     public User createRequest(UserCreationRequest request){
         User user = new User();
@@ -31,8 +40,13 @@ public class UserService {
         user.setLastName(request.getLastName());
         user.setDob(request.getDob());
 
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(5);
+
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        HashSet<String> roles = new HashSet<>();
+        roles.add(Role.USER.name());
+
+        user.setRoles(roles);
 
         return userRepository.save(user);
     }
