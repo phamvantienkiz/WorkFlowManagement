@@ -40,7 +40,6 @@ public class UserService {
         user.setLastName(request.getLastName());
         user.setDob(request.getDob());
 
-
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         HashSet<String> roles = new HashSet<>();

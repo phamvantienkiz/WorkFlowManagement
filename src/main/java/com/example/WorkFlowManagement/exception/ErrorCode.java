@@ -12,6 +12,9 @@ public enum ErrorCode {
     INVALID_PASSWORD(1004, "Password must be at least 3 characters"),
     USER_NOT_EXISTED(1005, "User not existed"),
     UNAUTHENTICATED(1005, "Unauthenticated"),
+    LIST_BOARD_NOT_EXISTED(2001, "List board not existed"),
+    BOARD_NOT_EXISTED(2002, "List board not existed"),
+    CARD_NOT_EXISTED(2003, "Card not existed")
     ;
     private int code;
     private String messgae;

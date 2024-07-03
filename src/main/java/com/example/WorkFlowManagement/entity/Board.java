@@ -29,4 +29,5 @@ public class Board {
 
     private Date createAt;
     private Date updateAt;
+
 }

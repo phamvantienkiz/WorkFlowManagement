@@ -22,8 +22,8 @@ public class ListBoard {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany
-    private List<Board> Boards;
+//    @OneToMany
+//    private List<Board> Boards;
 
     private String title;
 
