@@ -25,8 +25,8 @@ public class CardController {
     }
 
     @GetMapping("/get-cards/{boardId}")
-    public List<Card> getCards(@PathVariable Long id){
-        return cardService.getCards(id);
+    public List<Card> getCards(@PathVariable Long boardId){
+        return cardService.getCards(boardId);
     }
 
     @GetMapping("/get-card/{id}")

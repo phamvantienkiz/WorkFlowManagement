@@ -16,7 +16,7 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
-    @PostMapping("/create/{listBoadId}")
+    @PostMapping("/create/{listBoardId}")
     public BoardResponse createBoard(@PathVariable Long listBoardId, @RequestBody BoardCreationRequest board,
                                      HttpServletRequest request){
         String userId = (String) request.getAttribute("userId");
